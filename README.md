@@ -2,8 +2,6 @@
 
 여러 장의 디자인 이미지를 리버스 엔지니어링하여 관통하는 공통 디자인 DNA와 통합 프롬프트를 추출하는 강력한 AI 도구입니다. **OpenAI, Anthropic, Google AI**의 최신 2026년형 플래그십 모델들을 지원합니다.
 
-![Main Interface](https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6)
-
 ## ✨ 주요 기능
 
 - **멀티 AI 모델 지원**: GPT-5.2, Claude 4.5, Gemini 3 Pro 등 최신 고성능 모델 선택 가능.
