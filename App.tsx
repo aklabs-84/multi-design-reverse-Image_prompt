@@ -282,9 +282,14 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen p-4 md:p-8 flex flex-col items-center max-w-6xl mx-auto">
+    <div className="min-h-screen p-4 md:p-8 flex flex-col items-center max-w-6xl mx-auto relative">
+      {/* Brand Logo */}
+      <div className="absolute top-6 left-6 md:top-8 md:left-8">
+        <img src="/logo.svg" alt="AKLABS Logo" className="w-24 md:w-32 opacity-80 hover:opacity-100 transition-opacity" />
+      </div>
+
       {/* Header */}
-      <header className="w-full text-center mb-8 space-y-4">
+      <header className="w-full text-center mb-8 space-y-4 pt-12 md:pt-4">
         <h1 className="text-4xl md:text-6xl font-extrabold bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent pb-6 pt-2 leading-snug">
           Multi Design Reverse Engineer
         </h1>
