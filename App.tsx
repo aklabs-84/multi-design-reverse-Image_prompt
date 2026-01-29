@@ -282,428 +282,297 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen p-4 md:p-8 flex flex-col items-center max-w-6xl mx-auto relative">
-      {/* Brand Logo */}
-      <div className="absolute top-6 left-6 md:top-8 md:left-8">
-        <img src="/logo.svg" alt="AKLABS Logo" className="w-24 md:w-32 opacity-80 hover:opacity-100 transition-opacity" />
-      </div>
+    <div className="h-screen bg-[#020617] text-slate-200 flex flex-col font-sans selection:bg-indigo-500/30">
+      {/* Top Navigation Bar */}
+      <nav className="h-16 border-b border-slate-800/60 bg-slate-950/50 backdrop-blur-xl sticky top-0 z-50 flex items-center justify-between px-6">
+        <div className="flex items-center gap-4">
+          <img
+            src={`${import.meta.env.BASE_URL}logo.svg`}
+            alt="AKLABS Logo"
+            className="h-8 opacity-90 hover:opacity-100 transition-opacity cursor-pointer"
+            onClick={reset}
+          />
+          <div className="h-4 w-[1px] bg-slate-800 mx-2"></div>
+          <h1 className="text-lg font-bold bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent tracking-tight">
+            멀티 AI 디자인 분석기
+          </h1>
+        </div>
 
-      {/* Header */}
-      <header className="w-full text-center mb-8 space-y-4 pt-12 md:pt-4">
-        <h1 className="text-4xl md:text-6xl font-extrabold bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent pb-6 pt-2 leading-snug">
-          Multi Design Reverse Engineer
-        </h1>
-        <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-          여러 장의 이미지를 분석하여 관통하는 공통 디자인 DNA와 통합 프롬프트를 추출합니다.
-        </p>
-
-        <div className="flex justify-center gap-4 mt-4">
+        <div className="flex items-center gap-3">
           <button
             onClick={() => setShowGuide(!showGuide)}
-            className="px-4 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-full text-xs font-bold text-slate-300 transition-all flex items-center gap-2"
+            className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold transition-all ${showGuide ? 'bg-indigo-500 text-white' : 'bg-slate-900 border border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-200'
+              }`}
           >
-            <svg className={`w-4 h-4 transition-transform ${showGuide ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-            {showGuide ? '가이드 닫기' : '사용 가이드 보기'}
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            사용 가이드
           </button>
           <button
             onClick={() => setShowAPIKeys(!showAPIKeys)}
-            className="px-4 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-full text-xs font-bold text-slate-300 transition-all flex items-center gap-2"
+            className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold transition-all ${showAPIKeys ? 'bg-indigo-500 text-white' : 'bg-slate-900 border border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-200'
+              }`}
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-            API 키 설정
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path></svg>
+            API 설정
           </button>
         </div>
-      </header>
+      </nav>
 
-      {/* API 키 설정 섹션 */}
-      {showAPIKeys && (
-        <section className="w-full mb-8 animate-in fade-in slide-in-from-top-4 duration-500">
-          <div className="bg-slate-800/80 border border-slate-700/50 rounded-3xl p-6 md:p-8 backdrop-blur-xl shadow-2xl">
-            <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-              <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path></svg>
-              API 키 설정
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between px-1">
-                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">OpenAI API Key</label>
-                    {verificationStatus.openai === 'success' && <span className="text-[10px] text-green-400 font-bold flex items-center gap-1"><svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>사용 가능</span>}
-                    {verificationStatus.openai === 'error' && <span className="text-[10px] text-red-400 font-bold flex items-center gap-1"><svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>검증 실패</span>}
-                  </div>
-                  <input
-                    type="password"
-                    value={openaiKey}
-                    onChange={(e) => { setOpenaiKey(e.target.value); setVerificationStatus(prev => ({ ...prev, openai: null })); }}
-                    placeholder="sk-..."
-                    className="w-full bg-slate-900/80 border border-slate-700 rounded-xl p-3 text-sm text-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all font-mono"
-                  />
-                </div>
+      <div className="flex flex-1 overflow-hidden">
+        {/* Left Sidebar: Controls */}
+        <aside className="w-80 border-r border-slate-800/60 bg-slate-950/30 overflow-y-auto p-6 space-y-8 hidden lg:block">
+          {/* Model Selection */}
+          <section className="space-y-4">
+            <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest block">분석 AI 모델</label>
+            <select
+              value={selectedModel}
+              onChange={(e) => setSelectedModel(e.target.value)}
+              className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-sm text-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 appearance-none cursor-pointer"
+            >
+              <optgroup label="Anthropic">
+                <option value="anthropic:claude-sonnet-4-5-20250929">Claude Sonnet 4.5</option>
+                <option value="anthropic:claude-opus-4-5-20251101">Claude Opus 4.5</option>
+              </optgroup>
+              <optgroup label="OpenAI">
+                <option value="openai:gpt-5.2">GPT-5.2 (Latest)</option>
+                <option value="openai:gpt-4o">GPT-4o</option>
+              </optgroup>
+              <optgroup label="Google">
+                <option value="google:gemini-3-pro-preview">Gemini 3 Pro</option>
+                <option value="google:gemini-3-flash-preview">Gemini 3 Flash</option>
+              </optgroup>
+            </select>
+          </section>
+
+          {/* Aspect Ratio */}
+          <section className="space-y-4">
+            <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest block">출력 프롬프트 비율</label>
+            <div className="grid grid-cols-2 gap-2">
+              {ASPECT_RATIOS.map((ratio) => (
                 <button
-                  onClick={() => verifyAPIKey('openai')}
-                  disabled={!openaiKey || verifying.openai}
-                  className="w-full py-2 bg-slate-700 hover:bg-slate-600 disabled:opacity-50 text-[10px] font-bold text-white rounded-lg transition-all"
+                  key={ratio.id}
+                  onClick={() => setAspectRatio(ratio.id)}
+                  className={`flex flex-col items-center justify-center py-3 rounded-xl border transition-all ${aspectRatio === ratio.id
+                    ? 'bg-indigo-500/10 border-indigo-500/50 text-indigo-400'
+                    : 'bg-slate-900 border-slate-800 text-slate-500 hover:border-slate-700'
+                    }`}
                 >
-                  {verifying.openai ? '검증 중...' : 'OpenAI 키 검증하기'}
+                  <span className="text-xs font-bold">{ratio.label}</span>
+                  <span className="text-[9px] opacity-60 mt-1 uppercase">{ratio.desc}</span>
                 </button>
-              </div>
-
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between px-1">
-                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Anthropic API Key</label>
-                    {verificationStatus.anthropic === 'success' && <span className="text-[10px] text-green-400 font-bold flex items-center gap-1"><svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>사용 가능</span>}
-                    {verificationStatus.anthropic === 'error' && <span className="text-[10px] text-red-400 font-bold flex items-center gap-1"><svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>검증 실패</span>}
-                  </div>
-                  <input
-                    type="password"
-                    value={anthropicKey}
-                    onChange={(e) => { setAnthropicKey(e.target.value); setVerificationStatus(prev => ({ ...prev, anthropic: null })); }}
-                    placeholder="sk-ant-..."
-                    className="w-full bg-slate-900/80 border border-slate-700 rounded-xl p-3 text-sm text-slate-300 focus:outline-none focus:ring-2 focus:ring-orange-500/50 transition-all font-mono"
-                  />
-                </div>
-                <button
-                  onClick={() => verifyAPIKey('anthropic')}
-                  disabled={!anthropicKey || verifying.anthropic}
-                  className="w-full py-2 bg-slate-700 hover:bg-slate-600 disabled:opacity-50 text-[10px] font-bold text-white rounded-lg transition-all"
-                >
-                  {verifying.anthropic ? '검증 중...' : 'Anthropic 키 검증하기'}
-                </button>
-              </div>
-
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between px-1">
-                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Google AI API Key</label>
-                    {verificationStatus.google === 'success' && <span className="text-[10px] text-green-400 font-bold flex items-center gap-1"><svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>사용 가능</span>}
-                    {verificationStatus.google === 'error' && <span className="text-[10px] text-red-400 font-bold flex items-center gap-1"><svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>검증 실패</span>}
-                  </div>
-                  <input
-                    type="password"
-                    value={googleKey}
-                    onChange={(e) => { setGoogleKey(e.target.value); setVerificationStatus(prev => ({ ...prev, google: null })); }}
-                    placeholder="AIza..."
-                    className="w-full bg-slate-900/80 border border-slate-700 rounded-xl p-3 text-sm text-slate-300 focus:outline-none focus:ring-2 focus:ring-red-500/50 transition-all font-mono"
-                  />
-                </div>
-                <button
-                  onClick={() => verifyAPIKey('google')}
-                  disabled={!googleKey || verifying.google}
-                  className="w-full py-2 bg-slate-700 hover:bg-slate-600 disabled:opacity-50 text-[10px] font-bold text-white rounded-lg transition-all"
-                >
-                  {verifying.google ? '검증 중...' : 'Google 키 검증하기'}
-                </button>
-              </div>
-            </div>
-            <p className="mt-4 text-[10px] text-slate-500 text-center">API 키는 브라우저 로컬 스토리지에만 안전하게 저장됩니다.</p>
-          </div>
-        </section>
-      )}
-
-      {/* 사용 가이드 섹션 */}
-      {showGuide && (
-        <section className="w-full mb-12 animate-in fade-in slide-in-from-top-4 duration-500">
-          <div className="bg-slate-800/30 border border-slate-700/50 rounded-3xl p-6 md:p-8 backdrop-blur-md">
-            <div className="flex flex-col md:flex-row gap-8 items-start">
-              <div className="flex-1 space-y-4">
-                <div className="inline-block px-3 py-1 bg-indigo-500/10 border border-indigo-500/20 rounded-full text-[10px] font-black text-indigo-400 uppercase tracking-widest">
-                  Multi-Analysis
-                </div>
-                <p className="text-lg md:text-xl font-bold text-slate-100 leading-relaxed">
-                  "참고하고 싶은 여러 장의 이미지를 한꺼번에 업로드하세요. AI가 공통적인 레이아웃, 컬러 패턴, 기하학적 규칙을 찾아 하나의 통합 가이드라인으로 만들어 드립니다."
-                </p>
-              </div>
-              <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <h4 className="text-sm font-bold text-blue-400 flex items-center gap-2">
-                    <span className="w-5 h-5 bg-blue-500/10 rounded-md flex items-center justify-center text-[10px]">1</span>
-                    다중 이미지 업로드
-                  </h4>
-                  <p className="text-xs text-slate-400 leading-relaxed">여러 파일을 한꺼번에 선택하거나, 클립보드에서 여러 번 붙여넣어 이미지를 추가합니다.</p>
-                </div>
-                <div className="space-y-2">
-                  <h4 className="text-sm font-bold text-blue-400 flex items-center gap-2">
-                    <span className="w-5 h-5 bg-blue-500/10 rounded-md flex items-center justify-center text-[10px]">2</span>
-                    공통 패턴 분석
-                  </h4>
-                  <p className="text-xs text-slate-400 leading-relaxed">AI가 각 이미지의 개별 특징이 아닌, 전체를 아우르는 일관된 시스템 DNA를 분석합니다.</p>
-                </div>
-                <div className="space-y-2">
-                  <h4 className="text-sm font-bold text-blue-400 flex items-center gap-2">
-                    <span className="w-5 h-5 bg-blue-500/10 rounded-md flex items-center justify-center text-[10px]">3</span>
-                    통합 프롬프트 생성
-                  </h4>
-                  <p className="text-xs text-slate-400 leading-relaxed">생성된 하나의 프롬프트로 일관된 스타일의 새로운 시리즈를 제작할 수 있습니다.</p>
-                </div>
-                <div className="space-y-2">
-                  <h4 className="text-sm font-bold text-blue-400 flex items-center gap-2">
-                    <span className="w-5 h-5 bg-blue-500/10 rounded-md flex items-center justify-center text-[10px]">4</span>
-                    디자인 시스템 구축
-                  </h4>
-                  <p className="text-xs text-slate-400 leading-relaxed">추출된 Hex 코드와 폰트 스타일을 활용해 나만의 디자인 가이드를 확립하세요.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Main Content Area */}
-      <main className="w-full grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-
-        {/* Left Column: Input & Options */}
-        <section className="bg-slate-800/50 border border-slate-700 rounded-3xl p-6 shadow-2xl backdrop-blur-sm space-y-8">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-bold flex items-center gap-2">
-              <span className="bg-blue-500 w-2 h-6 rounded-full inline-block"></span>
-              이미지 분석 라이브러리 ({images.length})
-            </h2>
-            {images.length > 0 && state !== AppState.ANALYZING && (
-              <button onClick={reset} className="text-xs text-slate-400 hover:text-white transition-colors uppercase tracking-widest font-bold">전체 삭제</button>
-            )}
-          </div>
-
-          <div className="space-y-6">
-            {/* Image Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              {images.map((img, idx) => (
-                <div key={idx} className="relative group aspect-square rounded-xl overflow-hidden border border-slate-700 bg-slate-900 shadow-lg animate-in zoom-in-95 duration-200">
-                  <img src={img} alt={`Sample ${idx}`} className="w-full h-full object-cover" />
-                  <button
-                    onClick={() => removeImage(idx)}
-                    className="absolute top-1 right-1 bg-red-500/80 hover:bg-red-500 text-white p-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity"
-                  >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                  </button>
-                </div>
               ))}
-
-              {/* Add Button */}
-              <label className="flex flex-col items-center justify-center aspect-square border-2 border-dashed border-slate-700 rounded-xl cursor-pointer hover:border-blue-500 hover:bg-slate-800 transition-all group">
-                <svg className="w-8 h-8 text-slate-500 group-hover:text-blue-400 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4"></path></svg>
-                <span className="text-[10px] mt-2 text-slate-500 font-bold uppercase">이미지 추가</span>
-                <input type="file" ref={fileInputRef} className="hidden" accept="image/*" multiple onChange={handleImageUpload} />
-              </label>
-              {/* Model Selector */}
-              <div className="space-y-3 animate-in fade-in slide-in-from-bottom-2 duration-300">
-                <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest px-1">분석 AI 모델 선택 (AI Model)</label>
-                <select
-                  value={selectedModel}
-                  onChange={(e) => setSelectedModel(e.target.value)}
-                  className="w-full bg-slate-900/80 border border-slate-700 rounded-xl p-3 text-sm text-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all appearance-none cursor-pointer"
-                >
-                  <optgroup label="🟠 Anthropic - Flagship 2026">
-                    <option value="anthropic:claude-opus-4-5-20251101">Claude Opus 4.5 (Premium)</option>
-                    <option value="anthropic:claude-sonnet-4-5-20250929">Claude Sonnet 4.5 (Recommended)</option>
-                    <option value="anthropic:claude-haiku-4-5-20251001">Claude Haiku 4.5 (Fast)</option>
-                  </optgroup>
-                  <optgroup label="🔷 OpenAI - Flagship 2026">
-                    <option value="openai:gpt-5.2">GPT-5.2 (Latest)</option>
-                    <option value="openai:gpt-5.2-codex">GPT-5.2 Codex (Coding)</option>
-                    <option value="openai:gpt-5.1">GPT-5.1 (Balanced)</option>
-                    <option value="openai:gpt-5">GPT-5 (Standard)</option>
-                  </optgroup>
-                  <optgroup label="🔴 Google - Flagship 2026">
-                    <option value="google:gemini-3-pro-preview">Gemini 3 Pro (Vision Premium)</option>
-                    <option value="google:gemini-3-flash-preview">Gemini 3 Flash (Fast & Reliable)</option>
-                    <option value="google:gemini-2.5-flash">Gemini 2.5 Flash (Efficiency)</option>
-                  </optgroup>
-                </select>
-              </div>
             </div>
+          </section>
 
-            {images.length > 0 && (
-              <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-300">
-                {/* 가로세로 비율 선택 UI */}
-                <div className="space-y-3">
-                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest px-1">출력 프롬프트 비율 (Aspect Ratio)</label>
-                  <div className="grid grid-cols-5 gap-2">
-                    {ASPECT_RATIOS.map((ratio) => (
-                      <button
-                        key={ratio.id}
-                        onClick={() => setAspectRatio(ratio.id)}
-                        className={`flex flex-col items-center justify-center p-2 rounded-xl border transition-all ${aspectRatio === ratio.id
-                          ? 'bg-blue-600 border-blue-400 text-white shadow-lg shadow-blue-500/30'
-                          : 'bg-slate-900/50 border-slate-700 text-slate-400 hover:border-slate-500'
-                          }`}
-                      >
-                        <svg className="w-5 h-5 mb-1" fill="currentColor" viewBox="0 0 24 24">
-                          <path d={ratio.icon} />
-                        </svg>
-                        <span className="text-[10px] font-bold">{ratio.label}</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
+          {/* Custom Request */}
+          <section className="space-y-4">
+            <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest block">추가 요청 사항</label>
+            <textarea
+              value={userRequest}
+              onChange={(e) => setUserRequest(e.target.value)}
+              placeholder="블루 톤 강조..."
+              className="w-full h-32 bg-slate-900 border border-slate-800 rounded-xl p-4 text-sm text-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 resize-none placeholder:text-slate-700"
+            />
+          </section>
 
-                {/* 추가 요청 사항 입력창 */}
-                <div className="space-y-2">
-                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest px-1">추가 요청 사항 (Optional)</label>
-                  <textarea
-                    value={userRequest}
-                    onChange={(e) => setUserRequest(e.target.value)}
-                    placeholder="예: '전체적으로 블루 톤을 더 강조해줘', '공통적인 레이아웃 규칙을 찾아줘' 등"
-                    className="w-full h-24 bg-slate-900/80 border border-slate-700 rounded-xl p-4 text-sm text-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all resize-none"
-                  />
-                </div>
-
-                <div className="flex flex-col gap-3">
-                  {state !== AppState.ANALYZING && (
-                    <button
-                      onClick={startAnalysis}
-                      disabled={images.length === 0}
-                      className="w-full py-4 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold rounded-xl shadow-lg shadow-blue-500/20 transition-all active:scale-95 flex items-center justify-center gap-2"
-                    >
-                      {state === AppState.COMPLETED ? '새로운 옵션으로 통합 재분석' : `${images.length}장의 이미지 통합 분석 리포트 생성`}
-                    </button>
-                  )}
-
-                  {state === AppState.COMPLETED && (
-                    <div className="grid grid-cols-2 gap-3">
-                      <button onClick={scrollToResult} className="py-3 bg-indigo-600/20 hover:bg-indigo-600/40 text-indigo-400 font-bold rounded-xl border border-indigo-500/30 transition-all active:scale-95 flex items-center justify-center gap-2">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
-                        결과 보기
-                      </button>
-                      <button onClick={reset} className="py-3 bg-slate-700 hover:bg-slate-600 text-white font-bold rounded-xl transition-all active:scale-95 flex items-center justify-center gap-2">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-                        초기화
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
-
-            {images.length === 0 && (
-              <div className="py-20 text-center space-y-4">
-                <p className="text-slate-500 font-medium">분석할 이미지를 추가해 주세요.<br /><span className="text-xs">여러 장을 추가하면 공통점을 분석합니다.</span></p>
-                <p className="text-[10px] text-slate-600 font-bold uppercase tracking-widest">CTRL+V 지원</p>
-              </div>
-            )}
-          </div>
-        </section>
-
-        {/* Right Column: Result */}
-        <section ref={resultRef} className="bg-slate-800/50 border border-slate-700 rounded-3xl p-6 shadow-2xl backdrop-blur-sm min-h-[500px] flex flex-col overflow-hidden relative">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold flex items-center gap-2">
-              <span className="bg-indigo-500 w-2 h-6 rounded-full inline-block"></span>
-              통합 분석 결과 리포트
-            </h2>
-            {state === AppState.COMPLETED && (
-              <span className="px-2 py-1 bg-green-500/20 text-green-400 text-[10px] font-bold rounded border border-green-500/30 uppercase tracking-tighter">완료</span>
-            )}
-          </div>
-
-          <div className="flex-grow flex flex-col space-y-6 overflow-hidden">
+          {/* Action Button */}
+          <button
+            onClick={startAnalysis}
+            disabled={images.length === 0 || state === AppState.ANALYZING}
+            className="w-full py-4 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-30 text-white font-bold rounded-xl shadow-lg shadow-indigo-500/20 transition-all active:scale-[0.98] flex items-center justify-center gap-2"
+          >
             {state === AppState.ANALYZING ? (
-              <div className="h-full flex flex-col items-center justify-center space-y-4 py-20">
-                <div className="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
-                <div className="text-center">
-                  <p className="text-slate-200 font-bold mb-1">통합 디자인 DNA 추출 중...</p>
-                  <p className="text-slate-500 text-xs">{images.length}장의 이미지에서 패턴을 발견하고 있습니다.</p>
+              <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+            ) : (
+              '분석 리포트 생성'
+            )}
+          </button>
+        </aside>
+
+        {/* Main Content Stage */}
+        <main className="flex-1 overflow-y-auto bg-slate-950/20">
+          <div className="max-w-5xl mx-auto p-6 md:p-10 space-y-10 pb-32">
+
+            {/* Guide & API Panels */}
+            {showAPIKeys && (
+              <section className="bg-slate-900 border border-indigo-500/20 rounded-3xl p-8 mb-4 animate-in slide-in-from-top-4 duration-300">
+                <h3 className="text-lg font-bold text-white mb-6">API 키 설정</h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {['openai', 'anthropic', 'google'].map((p) => (
+                    <div key={p} className="space-y-3">
+                      <div className="flex justify-between items-center">
+                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">{p}</label>
+                        {verificationStatus[p] === 'success' && <span className="text-[9px] text-green-400 font-bold uppercase tracking-tighter">Verified</span>}
+                      </div>
+                      <input
+                        type="password"
+                        value={p === 'openai' ? openaiKey : p === 'anthropic' ? anthropicKey : googleKey}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          if (p === 'openai') setOpenaiKey(val);
+                          else if (p === 'anthropic') setAnthropicKey(val);
+                          else setGoogleKey(val);
+                          setVerificationStatus(prev => ({ ...prev, [p]: null }));
+                        }}
+                        className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-400"
+                        placeholder="Key..."
+                      />
+                      <button
+                        onClick={() => verifyAPIKey(p as any)}
+                        className="w-full py-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-[9px] font-bold text-slate-300 uppercase transition-all"
+                      >
+                        {verifying[p] ? 'Checking...' : 'Verify'}
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {showGuide && (
+              <section className="bg-indigo-500/5 border border-indigo-500/20 rounded-3xl p-8 animate-in slide-in-from-top-4 duration-300">
+                <p className="text-slate-300 leading-relaxed text-sm">
+                  여러 장의 디자인 이미지를 업로드하세요. AI가 관통하는 디자인 DNA를 분석하여 시스템 가이드와 통합 프롬프트를 추출합니다.
+                  <br /><br />
+                  <span className="text-indigo-400 font-bold">💡 Tip:</span> 클립보드 붙여넣기(Ctrl+V)를 지원하여 더욱 빠르게 이미지를 추가할 수 있습니다.
+                </p>
+              </section>
+            )}
+
+            {/* Image Gallery Stage */}
+            <section className="space-y-6">
+              <div className="flex items-center justify-between">
+                <h2 className="text-xl font-bold text-white">이미지 라이브러리 <span className="text-slate-600 ml-2 font-medium">{images.length}</span></h2>
+                <div className="flex gap-2">
+                  {images.length > 0 && <button onClick={reset} className="text-[10px] font-black text-slate-600 hover:text-red-400 transition-colors uppercase tracking-widest">Clear All</button>}
                 </div>
               </div>
-            ) : result ? (
-              <div className="flex flex-col space-y-6 overflow-y-auto pr-2 custom-scrollbar animate-in fade-in duration-500 pb-4">
-                <div className="bg-indigo-900/30 border border-indigo-500/30 rounded-2xl p-5 shadow-lg">
-                  <p className="text-[10px] text-indigo-400 font-black uppercase tracking-[0.2em] mb-2">COMMON STYLE NAME</p>
-                  <h3 className="text-2xl font-black text-white leading-tight">{parsedResult.title}</h3>
+
+              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                {images.map((img, idx) => (
+                  <div key={idx} className="relative group aspect-square rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 ring-offset-4 ring-offset-slate-950 hover:ring-2 hover:ring-indigo-500/50 transition-all">
+                    <img src={img} className="w-full h-full object-cover" />
+                    <button
+                      onClick={() => removeImage(idx)}
+                      className="absolute top-2 right-2 bg-black/60 hover:bg-red-500 text-white p-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-all scale-90 group-hover:scale-100"
+                    >
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                    <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  </div>
+                ))}
+
+                <label className="flex flex-col items-center justify-center aspect-square border-2 border-dashed border-slate-800 rounded-2xl cursor-pointer hover:border-indigo-500/50 hover:bg-indigo-500/5 transition-all group">
+                  <div className="w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center group-hover:scale-110 group-hover:bg-indigo-500/10 transition-all">
+                    <svg className="w-6 h-6 text-slate-500 group-hover:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4"></path></svg>
+                  </div>
+                  <span className="text-[10px] mt-3 text-slate-600 font-black uppercase tracking-widest">Add Image</span>
+                  <input type="file" ref={fileInputRef} className="hidden" accept="image/*" multiple onChange={handleImageUpload} />
+                </label>
+              </div>
+            </section>
+
+            {/* Results Stage */}
+            {result || state === AppState.ANALYZING ? (
+              <section id="analysis-result" className="space-y-8 animate-in fade-in slide-in-from-bottom-6 duration-700">
+                <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-slate-800 to-transparent"></div>
+
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-8 bg-indigo-500 rounded-full shadow-[0_0_15px_rgba(99,102,241,0.5)]"></div>
+                  <h2 className="text-2xl font-black text-white tracking-tight">통합 디자인 리포트</h2>
                 </div>
 
-                <div className="bg-slate-900/40 border border-slate-700/50 rounded-2xl p-5">
-                  <p className="text-[10px] text-slate-500 font-black uppercase tracking-[0.2em] mb-2">SYSTEM DESCRIPTION</p>
-                  <p className="text-slate-300 text-sm leading-relaxed">{parsedResult.intro}</p>
-                </div>
-
-                {parsedResult.recommended && (
-                  <div className="bg-amber-900/10 border border-amber-500/20 rounded-2xl p-5 shadow-sm">
-                    <p className="text-[10px] text-amber-500/80 font-black uppercase tracking-[0.2em] mb-3 flex items-center gap-2">
-                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                      RECOMMENDED APPLICATION FIELDS
-                    </p>
-                    <div className="text-slate-300 text-xs leading-relaxed whitespace-pre-wrap">
-                      {parsedResult.recommended}
+                {state === AppState.ANALYZING ? (
+                  <div className="py-20 flex flex-col items-center justify-center text-center space-y-6">
+                    <div className="relative">
+                      <div className="w-16 h-16 border-4 border-indigo-500/20 border-t-indigo-500 rounded-full animate-spin"></div>
+                      <div className="absolute inset-0 flex items-center justify-center text-[10px] font-black text-indigo-400 animate-pulse">DNA</div>
                     </div>
+                    <div className="space-y-1">
+                      <p className="text-slate-100 font-bold text-lg">이미지 패턴 리버스 엔지니어링 중</p>
+                      <p className="text-slate-500 text-xs">최신 파운데이션 모델을 사용하여 시스템 가이드를 구축하고 있습니다.</p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="bg-slate-900/60 border border-slate-800 rounded-3xl p-8 hover:border-slate-700 transition-colors shadow-xl">
+                        <label className="text-[10px] font-black text-indigo-400 uppercase tracking-widest block mb-4">STYLE IDENTIFIER</label>
+                        <h3 className="text-3xl font-black text-white leading-tight mb-4">{parsedResult.title}</h3>
+                        <p className="text-slate-400 text-sm leading-relaxed">{parsedResult.intro}</p>
+                      </div>
+
+                      <div className="bg-slate-900/60 border border-slate-800 rounded-3xl p-8 hover:border-slate-700 transition-colors shadow-xl">
+                        <label className="text-[10px] font-black text-amber-500/80 uppercase tracking-widest block mb-4 flex items-center gap-2">
+                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                          Recommended Fields
+                        </label>
+                        <div className="text-slate-300 text-sm leading-relaxed whitespace-pre-wrap">
+                          {parsedResult.recommended}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="bg-slate-900/60 border border-slate-800 rounded-3xl p-8 shadow-2xl space-y-6">
+                      <div className="flex items-center justify-between">
+                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Unified Prompt Guide</label>
+                        <button
+                          onClick={copyToClipboard}
+                          className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold transition-all ${copied
+                            ? 'bg-green-500/10 text-green-400 border border-green-500/20'
+                            : 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/25 hover:bg-indigo-400 active:scale-95'
+                            }`}
+                        >
+                          {copied ? <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7"></path></svg> : <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>}
+                          {copied ? 'Copied to Clipboard!' : 'Copy Prompt'}
+                        </button>
+                      </div>
+                      <div className="bg-slate-950/80 rounded-2xl p-6 font-mono text-[13px] text-indigo-300 leading-relaxed border border-slate-800 shadow-inner">
+                        <pre className="whitespace-pre-wrap">{parsedResult.prompt}</pre>
+                      </div>
+                    </div>
+
+                    {/* Bottom Promotion Card */}
+                    <aside className="mt-8">
+                      <a
+                        href="https://litt.ly/aklabs"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group block bg-gradient-to-br from-indigo-600 to-violet-700 rounded-3xl p-1 shadow-2xl hover:scale-[1.01] transition-transform duration-300"
+                      >
+                        <div className="bg-slate-950 rounded-[1.4rem] p-6 flex flex-col md:flex-row items-center justify-between gap-6 group-hover:bg-transparent transition-colors duration-300">
+                          <div className="space-y-1 text-center md:text-left">
+                            <h4 className="text-xl font-black text-white tracking-tight italic">Learn AI Mastery at AKLABS</h4>
+                            <p className="text-indigo-400/80 text-sm font-semibold">당신만의 창의적인 AI 웹앱을 직접 만드는 법을 배워보세요.</p>
+                          </div>
+                          <div className="flex items-center gap-4 px-6 py-3 bg-white text-slate-950 font-black rounded-2xl shadow-xl group-hover:bg-indigo-100 transition-colors">
+                            START NOW
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M14 5l7 7-7 7"></path></svg>
+                          </div>
+                        </div>
+                      </a>
+                    </aside>
                   </div>
                 )}
-
-                <div className="flex flex-col space-y-3">
-                  <div className="flex items-center justify-between px-1">
-                    <p className="text-[10px] text-slate-500 font-black uppercase tracking-[0.2em]">UNIFIED STRUCTURAL PROMPT</p>
-                    <button
-                      onClick={copyToClipboard}
-                      className={`text-xs font-bold flex items-center gap-1 transition-all px-2 py-1 rounded-md ${copied
-                        ? 'bg-green-500/20 text-green-400'
-                        : 'text-indigo-400 hover:text-indigo-300 hover:bg-indigo-500/10'
-                        }`}
-                    >
-                      {copied ? (
-                        <>
-                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
-                          복사됨!
-                        </>
-                      ) : (
-                        <>
-                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
-                          프롬프트 복사
-                        </>
-                      )}
-                    </button>
-                  </div>
-                  <div className="bg-slate-900 border border-slate-700 rounded-2xl p-6 font-mono text-[13px] leading-relaxed relative group shadow-inner">
-                    <pre className="whitespace-pre-wrap text-slate-300">{parsedResult.prompt}</pre>
-                  </div>
-                </div>
-              </div>
-            ) : error ? (
-              <div className="h-64 flex flex-col items-center justify-center text-center space-y-2">
-                <span className="text-red-400 text-3xl">⚠️</span>
-                <p className="text-red-400 font-medium">{error}</p>
-                <button onClick={startAnalysis} className="mt-4 text-sm underline text-slate-400 hover:text-white">재시도</button>
-              </div>
+              </section>
             ) : (
-              <div className="h-full flex flex-col items-center justify-center text-slate-600 text-center py-20 opacity-50">
-                <div className="mb-4 bg-slate-800/30 p-6 rounded-full inline-block">
-                  <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.663 17h4.674M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+              <div className="flex flex-col items-center justify-center py-40 opacity-30 animate-in fade-in duration-1000">
+                <div className="w-24 h-24 mb-6 rounded-full border-2 border-dashed border-slate-700 flex items-center justify-center">
+                  <svg className="w-10 h-10 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                 </div>
-                <p className="font-medium">이미지들을 분석하면 공통 가이드가 표시됩니다.</p>
+                <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">Ready to Analyze Patterns</p>
               </div>
             )}
           </div>
-        </section>
-      </main>
-
-      {/* AKLABS 홍보 푸터 배너 */}
-      <div className="w-full max-w-xl mx-auto mt-20 mb-10 group">
-        <a
-          href="https://litt.ly/aklabs"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center justify-between p-6 md:p-8 bg-white rounded-[2.5rem] shadow-2xl hover:scale-[1.02] transition-all duration-300 cursor-pointer"
-        >
-          <div className="space-y-1">
-            <p className="text-slate-900 font-bold text-lg md:text-xl">나만의 AI 웹앱을 만들고 싶다면?</p>
-            <p className="text-indigo-600 font-bold md:text-lg italic">아크랩스에서 AI 마스터가 되어보세요</p>
-          </div>
-          <div className="flex-shrink-0 bg-[#0a0f1a] w-14 h-14 md:w-16 md:h-16 rounded-3xl flex items-center justify-center shadow-lg group-hover:bg-indigo-600 transition-colors">
-            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M9 5l7 7-7 7" />
-            </svg>
-          </div>
-        </a>
+        </main>
       </div>
 
-      <footer className="mt-12 text-slate-600 text-xs py-8 text-center border-t border-slate-800/50 w-full tracking-widest uppercase">
-        Multi-Image Design Reverse Engineer AI Analyst • Powered by Multi-AI Support
-      </footer>
-
       <style>{`
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #475569; }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #334155; }
+        body { -webkit-font-smoothing: antialiased; }
       `}</style>
     </div>
   );
